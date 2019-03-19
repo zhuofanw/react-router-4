@@ -31,7 +31,6 @@ const User = (props) => {
 // }
 
 const MenuLink = ({children, to, exact}) => {
-    console.log(children);
     return(
         <Route path={to} exact={ exact } children={ ({match}) => (
             <NavLink activeStyle={ match ? {color: 'green'} : {}} to={to}>
@@ -41,6 +40,19 @@ const MenuLink = ({children, to, exact}) => {
     )
 }
 
+const routes = [
+    {
+        path:"/",
+        component: Home,
+        exact: true
+    },
+    {
+        path:"/about",
+        component: About,
+        exact: true,
+        strict:true
+    },
+]
 class App extends Component {
     handleClick = (e) => {
         console.log('click');
@@ -92,9 +104,19 @@ class App extends Component {
                         </div>
                     </div>
                     <Switch>
-                        <Route exact path="/" component={Home}/>
+                        {
+                            routes.map((route) => (
+                                <Route
+                                    key={route.path}
+                                    path={route.path}
+                                    component={route.component}
+                                    {...route}
+                                />
+                            ))
+                        }
+                        {/*<Route exact path="/" component={Home}/>*/}
                         <Route path="/home" component={Home}/>
-                        <Route path="/about" component={About}/>
+                        {/*<Route path="/about" component={About}/>*/}
                         <Route path="/vip" component={Vip}/>
                         <Route path="/users/profile/:id" component={User}/>
                         <Redirect from="/users/:id" to="/users/profile/:id" />
