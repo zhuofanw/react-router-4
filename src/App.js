@@ -6,15 +6,22 @@ import Home from './components/Home';
 import About from './components/About';
 import Vip from './components/Vip';
 import NoMatch from './components/NoMatch';
+import queryString from 'query-string';
 
 const User = (props) => {
-    console.log(props);
-    return(
+    const params = new URLSearchParams(props.location.search);
+    console.log(params.get("name"));
+    console.log(params.get("a"));
+    const value = queryString.parse(props.location.search);
+    console.log(value.name);
+    console.log(value.a);
+    return (
         <div>
             User {props.match.params.id}
         </div>
     );
 }
+
 class App extends Component {
     render() {
 
@@ -48,7 +55,6 @@ class App extends Component {
                                     About
                                 </NavLink>
                             </li>
-
                             <li>
                                 <NavLink
                                     exact
@@ -57,6 +63,16 @@ class App extends Component {
                                         color: "green"
                                     }}>
                                     Error
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    exact
+                                    to="/users/rails365"
+                                    activeStyle={{
+                                        color: "green"
+                                    }}>
+                                    Rails365
                                 </NavLink>
                             </li>
                         </ul>
