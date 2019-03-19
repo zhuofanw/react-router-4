@@ -19,6 +19,27 @@ const User = (props) => {
         </div>
     );
 }
+// const MenuLink = ({children, to, exact}) => {
+//     console.log(children);
+//
+//     const match = window.location.pathname === to
+//     return(
+//         <NavLink activeStyle={ match ? {color: 'green'} : {}} to={to}>
+//             { match ? '>' : ''} {children}
+//         </NavLink>
+//     )
+// }
+
+const MenuLink = ({children, to, exact}) => {
+    console.log(children);
+    return(
+        <Route path={to} exact={ exact } children={ ({match}) => (
+            <NavLink activeStyle={ match ? {color: 'green'} : {}} to={to}>
+                { match ? '>' : ''} {children}
+            </NavLink>
+        )} />
+    )
+}
 
 class App extends Component {
     handleClick = (e) => {
@@ -36,45 +57,25 @@ class App extends Component {
                     <div className="App-intro">
                         <ul>
                             <li>
-                                <NavLink
-                                    exact
-                                    to="/"
-                                    activeStyle={{
-                                        color: "green"
-                                    }}>
+                                <MenuLink exact = {true} to="/">
                                     Home
-                                </NavLink>
+                                </MenuLink>
                             </li>
 
                             <li>
-                                <NavLink
-                                    exact
-                                    to="/about"
-                                    activeStyle={{
-                                        color: "green"
-                                    }}>
+                                <MenuLink exact = {true} to="/about">
                                     About
-                                </NavLink>
+                                </MenuLink>
                             </li>
                             <li>
-                                <NavLink
-                                    exact
-                                    to="/error"
-                                    activeStyle={{
-                                        color: "green"
-                                    }}>
+                                <MenuLink exact = {true} to="/error">
                                     Error
-                                </NavLink>
+                                </MenuLink>
                             </li>
                             <li>
-                                <NavLink
-                                    exact
-                                    to="/users/rails365"
-                                    activeStyle={{
-                                        color: "green"
-                                    }}>
+                                <MenuLink exact = {true} to="/users/rails365">
                                     Rails365
-                                </NavLink>
+                                </MenuLink>
                             </li>
                             <li>
                                 <Link to={{
