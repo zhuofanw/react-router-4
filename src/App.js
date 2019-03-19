@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Route, BrowserRouter, NavLink, Switch} from 'react-router-dom';
+import {Route, BrowserRouter, NavLink, Switch, Link, Redirect} from 'react-router-dom';
 import Home from './components/Home';
 import About from './components/About';
 import Vip from './components/Vip';
@@ -10,10 +10,8 @@ import queryString from 'query-string';
 
 const User = (props) => {
     const params = new URLSearchParams(props.location.search);
-    console.log(params.get("name"));
-    console.log(params.get("a"));
+    console.log(props);
     const value = queryString.parse(props.location.search);
-    console.log(value.name);
     console.log(value.a);
     return (
         <div>
@@ -23,6 +21,9 @@ const User = (props) => {
 }
 
 class App extends Component {
+    handleClick = (e) => {
+        console.log('click');
+    }
     render() {
 
         return (
@@ -75,14 +76,27 @@ class App extends Component {
                                     Rails365
                                 </NavLink>
                             </li>
+                            <li>
+                                <Link to={{
+                                    pathname: '/users/rails365',
+                                    search: '?a=b',
+                                    state: { fromDashboard:true}
+                                }}>
+                                    pro
+                                </Link>
+                            </li>
                         </ul>
+                        <div>
+                            <button onClick={() => this.handleClick()}>push</button>
+                        </div>
                     </div>
                     <Switch>
                         <Route exact path="/" component={Home}/>
                         <Route path="/home" component={Home}/>
                         <Route path="/about" component={About}/>
                         <Route path="/vip" component={Vip}/>
-                        <Route path="/users/:id" component={User}/>
+                        <Route path="/users/profile/:id" component={User}/>
+                        <Redirect from="/users/:id" to="/users/profile/:id" />
                         <Route component={NoMatch}/>
                     </Switch>
                 </div>
